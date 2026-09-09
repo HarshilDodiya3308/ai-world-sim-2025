@@ -2,21 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.aiworldsimulation</groupId>
-    <artifactId>ai-world-simulation-engine</artifactId>
+    <artifactId>ai-world-simulation</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>AI World Simulation Engine</name>
-    <description>A complete Java Swing application featuring autonomous NPCs in a simulated world with explainable AI decision-making</description>
+    <description>A comprehensive Java Swing application featuring autonomous NPCs with explainable AI decision-making</description>
+    <url>https://github.com/HarshilDodiya3308/ai-world-sim-2025</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>2.0.5</slf4j.version>
     </properties>
 
     <dependencies>
@@ -27,29 +29,32 @@
             <version>3.44.0.0</version>
         </dependency>
 
-        <!-- JUnit for Testing -->
+        <!-- SLF4J API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <!-- SLF4J Simple Implementation -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <!-- JUnit 4 Testing Framework -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Logging: SLF4J with Simple Binding -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.9</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -60,6 +65,22 @@
                 </configuration>
             </plugin>
 
+            <!-- Maven JAR Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.aiworldsimulation.Main</mainClass>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Shade Plugin for Fat JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -76,16 +97,27 @@
                                     <mainClass>com.aiworldsimulation.Main</mainClass>
                                 </transformer>
                             </transformers>
-                            <finalName>ai-world-simulation-${project.version}</finalName>
+                            <finalName>ai-world-simulation-1.0.0</finalName>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
+            <!-- Exec Maven Plugin for running application -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.aiworldsimulation.Main</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Surefire Plugin for running tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.1.0</version>
             </plugin>
         </plugins>
     </build>
